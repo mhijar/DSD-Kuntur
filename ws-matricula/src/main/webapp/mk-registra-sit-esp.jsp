@@ -1,26 +1,33 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" import="java.sql.*" errorPage="" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@page import="pe.edu.upc.dsd.ws.bean.Parent"%>
+<%@page import="pe.edu.upc.dsd.ws.bean.Alumno"%>
+<%@page import="java.util.List"%>
 <html>
 <head>
 <title> Welcome to Markham College </title>
 </head>
 
 <body bgcolor= "#FFFFFF">
-
-<font face="verdana"><b>Matr韈ula > Proceso de Matr韈ula</b></font>
+<%@ include file="mk-menu.jsp" %>
+<font face="verdana"><b>Matr铆cula > Proceso de Matr铆cula</b></font>
 <br></br>
 
 <font face="verdana"><b><h5>REGISTRO DE SITUACIONES ESPECIALES</h5></b>
 
-<br><small>Situaciones especiales en la familia, problemas de salud o de aprendizaje, factores emocionales, etc., pueden afectar el desempe駉 escolar de hijo(a). Es muy importante que
-<br>los tutores y profesores est閚 informados de estas situaciones.
+<br><small>Situaciones especiales en la familia, problemas de salud o de aprendizaje, factores emocionales, etc., pueden afectar el desempe帽o escolar de hijo(a). Es muy importante que
+<br>los tutores y profesores est茅n informados de estas situaciones.
 
-<br>El registro de situaciones especiales ha sido creado para comunicar esta informaci髇 a los nuevos profesoresy tutor de su hijo(a).</br>
+<br>El registro de situaciones especiales ha sido creado para comunicar esta informaci贸n a los nuevos profesoresy tutor de su hijo(a).</br>
 
 <form method="post">
-<br>Por favor, describa cualquier situaci髇 especial abajo (excepto problemas de salud): </br>
+<br>Por favor, describa cualquier situaci贸n especial abajo (excepto problemas de salud): </br>
 <textarea name="comentarios" rows="10" cols="85"></textarea>
 
 <br>
-<input name="check" type="checkbox" /><b>Por favor marque el recuadro si desea que solo el Headmster, el Director y el Jefe de Secci髇 pueden ver esta informaci髇.<br />
+<input name="check" type="checkbox" /><b>Por favor marque el recuadro si desea que solo el Headmster, el Director y el Jefe de Secci贸n pueden ver esta informaci贸n.<br />
 
 <br>Problemas de salud y/o alergias</br>
 <textarea name="comentarios" rows="10" cols="85"></textarea>
