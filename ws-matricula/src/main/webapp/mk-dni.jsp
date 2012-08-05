@@ -21,46 +21,42 @@
 		
 	}
 	
+	function grabarDNI()
+	{
+
+		document.formularioPersona.action.value = 'mk-registra-sit-esp.jsp';
+		document.formularioPersona.submit();
+	}
+	
 </script>
-
-
-
-
-
-
 </head>
 
 <body bgcolor= "#FFFFFF">
-
 <form name="formularioPersona" method="get" action="<%=request.getContextPath()%>/buscarPersona.do">
 <input type="hidden" name="accion" value=""/>
-<font face="verdana">
-<img src="images/logo.jpg" width="280" height="45"><b>MATRICULA EN LINEA 2012</b>
-
-<br></br>
-<br></br>
-
-
-<table border="0"  bgcolor="white" height="40"> 
-		
-		<tr bgcolor="#F8ECE0"  align="center">
-			<th width="300"><font color="#DBA901"><small>AYUDA</font></small></th>
-			<th width="300"><font color="#DBA901"><small><a href="mk-prerrequisitos.jsp">PRERREQUISITOS</a></small></font></th>
-			<th width="300"><font color="#DBA901"><small>DOCUMENTOS</font></small></th>
-			<th width="300"><font color="#DBA901"><small><a href="mk-proceso-mat.jsp">MATRICULAR</a></font></small></th>
-			<th width="300"><font color="#DBA901"><small><a href="mk-ingreso.jsp">SALIR</a></font></small></th>
-		</tr>
-
-		<tr><td bgcolor="#DBA901"  align="center"colspan="5" width="100" height="5">
-		</td></tr>
-
-</table>
-
+<%@ include file="mk-menu.jsp" %>
 
 <font face="verdana"><h5><b>Matrícula > Proceso de Matrícula</b></h5>
 
+<%
+int s=0;    
+if (request.getParameter("s") != null) {
+       s = Integer.parseInt(request.getParameter("s"));
+      // out.println("Please enter your name."+s);    
+}
+pageContext.setAttribute("s", s);
+
+String inicio=null; 
+if (request.getParameter("accion") != null) {
+	inicio = request.getParameter("accion");
+   // out.println("Please enter your name."+s);    
+}
+pageContext.setAttribute("inicio", inicio);
+%>
+
 <div align="center">
-<b><h4>ROZAS VARGAS, Jorge Daniel</h4></b>
+<b><h4>${childrenParents[s].apPaterno} ${childrenParents[s].apMaterno},  ${childrenParents[s].nombre}</h4></b>
+
 
 
 <b><h5>DOCUMENTO DE IDENTIDAD DEL ESTUDIANTE</h5></b>
@@ -74,6 +70,9 @@
 <tr><td>Ingresar DNI</td><td><input type="text" name="txtDNI" value="${model.persona.dni}" /></td><td><input type="submit" name="btnConsultar" value="Consultar DNI" onclick="javascript:buscar();"  /></td></tr>
 </table>
 <br>
+<c:if test="${model.persona.dni == null && inicio != null }">
+<font face="verdana" color="red"><b>DNI Incorrecto</b></font>
+</c:if>
 
 
 <table  width="400" cellspacing="0" cellpadding="0" align="center" style="border-right: 1px solid #D2ae7b; border-LEFT: 1px solid #D2ae7b; border-TOP: 1px solid #D2ae7b;font-family:Verdana;font-size:small;">
@@ -86,18 +85,29 @@
 </table>
 <br></br>
 
-<c:if test="${model.persona.dni}==null">
- <c:out value="El documento ingresado no existe<br /><br />" escapeXml="false" />
-</c:if>
+
 
 <br></br>
 
+<!---
 <table border="1" WIDTH=35% height=5% align="center" > 
-		<tr><td><input type="submit" value="Grabar DNI"></td>
 		<td><font face="verdana"><small>Si el número del documento ingresado es correcto presione "Grabar DNI" para continuar</small></font></td>
+		<A href="mk-registra-sit-esp.jsp"><img src="images/continuar.png" width="98" height="34" align="right"></A>
 		</tr>
+				
 </table>
+--->
+<c:if test="${model.persona.dni != null}">
+
+	<table border="1" WIDTH=35% height=5% align="center" > 
+			<tr><td>
+			<A href="mk-registra-sit-esp.jsp"><img src="images/continuar.png" width="98" height="34" align="right"></A>
+			<input type="submit" value="Grabar DNI" name="btnSubmit" id="btnSubmit"></td>
+			<td><font face="verdana"><small>Si el número del documento ingresado es correcto presione "Grabar DNI" para continuar</small></font></td>
+			</tr>
+	</table>
 	
+</c:if>
 
 </div>
 
