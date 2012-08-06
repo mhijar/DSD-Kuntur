@@ -43,7 +43,7 @@
 		<tr align="center">
 			<th width="300"><small>ACTUALIZACION DE DATOS</small></th>
 			<th width="200"><small><font color="green">PENDIENTE</font></small></th>
-			<th width="250"><small><small><font color="blue"><a href="mk-actualizacion.jsp">Presione aquí para actualizar</a></font></small></small></th>
+			<th width="250"><small><small><font color="blue">Presione aquí para actualizar</font></small></small></th>
 		</tr>
 
 </table>

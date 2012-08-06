@@ -24,5 +24,5 @@ public interface Service
 	
 	List<Alumno> obtenerHijos(String codigoParent);
 	
-	
+	Alumno obtenerAlumno(String codigoAlu);
 }
