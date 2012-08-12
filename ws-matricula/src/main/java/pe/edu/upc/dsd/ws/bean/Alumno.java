@@ -19,6 +19,14 @@ public class Alumno {
 	private String firmaAcept;
 	private String fechaMat;
 	
+	private String codigomat;
+	
+	public String getCodigomat() {
+		return codigomat;
+	}
+	public void setCodigomat(String codigomat) {
+		this.codigomat = codigomat;
+	}
 	public String getSitSpecial() {
 		return sitSpecial;
 	}

@@ -25,4 +25,8 @@ public interface Service
 	List<Alumno> obtenerHijos(String codigoParent);
 	
 	Alumno obtenerAlumno(String codigoAlu);
+	
+	List<Parent> obtenerFamilia(String codigoParent);
+	
+	Parent obtenerParents(String codigoParent);
 }

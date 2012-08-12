@@ -1,6 +1,10 @@
 package pe.edu.upc.dsd.controller;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +33,8 @@ public class AdministrarMatriculaController extends AbstractController
 	
 	private static final String VISTA_CONTINUAR_MATRICULA = "mk-acepta-mat";
 	private static final String VISTA_ACTUAL = "mk-registra-sit-esp";
+	private static final String VISTA_FINALIZAR = "mk-finaliza";
+	private static final String VISTA_PRINCIPAL = "mk-proceso-mat";
 	private static final String PARAMETRO_ACCION = "accion";
 	
 	private static final String PARAMETRO_COMNENTSP = "txtCommentsSpecial";
@@ -37,6 +43,7 @@ public class AdministrarMatriculaController extends AbstractController
 	
 	private static final String ACCION_GRABAR = "grabarmat";
 	private static final String ACCION_ACEPMAT = "grabaraceptacionmat";
+	private static final String ACCION_PRINCIPAL = "retornaprincipal";
 	
 	private static final String PARAMETRO_SEG = "elegirSeg";
 	private static final String PARAMETRO_SEGPROPIO  = "elegirSegPropio";
@@ -44,6 +51,8 @@ public class AdministrarMatriculaController extends AbstractController
 	private static final String PARAMETRO_ACEPT  = "checkAceptacionMat";
 	private static final String PARAMETRO_NOMFIRMA  = "nombreFirma";
 	
+	
+
 	private Service service;
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -68,7 +77,7 @@ public class AdministrarMatriculaController extends AbstractController
 			alumnoActualizar.setFlagHeadMaster(comentarioHead);
 			
 			logger.debug("Retorna codigo Alumno de la session?='" + codigoAlu + "'");
-			logger.debug("Situaci—n especial del alumno='" + alumnoActualizar.getSitSpecial() + "'");
+			logger.debug("Situación especial del alumno='" + alumnoActualizar.getSitSpecial() + "'");
 			
 			return new ModelAndView(VISTA_CONTINUAR_MATRICULA, getModel(request));
 		}
@@ -84,11 +93,24 @@ public class AdministrarMatriculaController extends AbstractController
 			String aceptacionMat = request.getParameter(PARAMETRO_ACEPT);
 			String firmaParent = request.getParameter(PARAMETRO_NOMFIRMA);
 			
+			
+			
+			int randomNum = 10000 + (int)(Math.random()*50000); 
+			DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+			DateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			Date date = new Date();
+			String fechamatSimple=(dateFormat.format(date));
+			String fechamat=(dateFormat2.format(date));
+			
+			
 			String codigoAlu = (String)request.getSession().getAttribute("alumnoSeleccionado");
 			
 			Alumno alumnoActualizar = service.obtenerAlumno(codigoAlu);
 			
 			alumnoActualizar.setInfSeguroMarkham(seguro);
+			
+			alumnoActualizar.setCodigomat("MAT"+fechamatSimple+"-"+randomNum);
+			alumnoActualizar.setFechaMat(fechamat);
 			
 			if(seguroCompania != null){
 				alumnoActualizar.setInfSeguroOtros(seguroCompania);
@@ -101,10 +123,25 @@ public class AdministrarMatriculaController extends AbstractController
 			logger.debug("Retorna codigo Alumno de la session?='" + codigoAlu + "'");
 			logger.debug("El DNI del alumno esta actualizado='" + alumnoActualizar.getFirmaAcept() + "'");
 			
-			return new ModelAndView(VISTA_CONTINUAR_MATRICULA, getModel(request));
+			
+			
+			return new ModelAndView(VISTA_FINALIZAR, getModel(request));
 		
 		}
 		
+		
+		
+		if(esAccionPrincipal(request))
+		{
+			
+			logger.debug("Se retorna a la pantalla principal de Matricula...");
+			
+			
+			
+			
+			return new ModelAndView(VISTA_PRINCIPAL, getModel(request));
+		
+		}
 		
 		
 		
@@ -159,6 +196,12 @@ public class AdministrarMatriculaController extends AbstractController
 		return ACCION_ACEPMAT.equals(request.getParameter(PARAMETRO_ACCION));
 	}
 	
+	private boolean esAccionPrincipal(HttpServletRequest request)
+	{
+		return ACCION_PRINCIPAL.equals(request.getParameter(PARAMETRO_ACCION));
+	}
+	
+
 	/**
 	 * @param service
 	 */
